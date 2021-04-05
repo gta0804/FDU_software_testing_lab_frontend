@@ -1,7 +1,7 @@
 <template>
     <div class="back">
 		<div class="formbox">
-			<div class="logobox">
+			<div class="logobox animate__flipInX animate__animated">
 				<img src="../assets/logo1.png" alt="同济大学浙江学院">
 				<h3>银行业务模拟实训系统</h3>
 			</div>
@@ -135,5 +135,85 @@
     color: #fff;
     background-color: #068e68;
     border-color: #068e68;
+}
+
+.animate__animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+.animate__flipInX {
+    -webkit-backface-visibility: visible!important;
+    backface-visibility: visible!important;
+    -webkit-animation-name: flipInX;
+    animation-name: flipInX;
+}
+@-webkit-keyframes flipInX {
+            from {
+                    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+                     transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+                     -webkit-animation-timing-function: ease-in;
+                    animation-timing-function: ease-in;
+                     opacity: 0;
+                 }
+             
+            40% {
+                     -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+                     transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+                     -webkit-animation-timing-function: ease-in;
+                     animation-timing-function: ease-in;
+                 }
+            
+            60% {
+                     -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+                     transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+                     opacity: 1;
+                }
+             
+            80% {
+                     -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+                     transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+                }
+            
+            to {
+                    -webkit-transform: perspective(400px);
+                    transform: perspective(400px);
+             }
+}
+       
+@keyframes flipInX {
+            from {
+                    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+                     transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+                     -webkit-animation-timing-function: ease-in;
+                    animation-timing-function: ease-in;
+                     opacity: 0;
+                 }
+             
+            40% {
+                     -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+                     transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+                     -webkit-animation-timing-function: ease-in;
+                     animation-timing-function: ease-in;
+                 }
+            
+            60% {
+                     -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+                     transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+                     opacity: 1;
+                }
+             
+            80% {
+                     -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+                     transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+                }
+            
+            to {
+                    -webkit-transform: perspective(400px);
+                    transform: perspective(400px);
+             }
 }
 </style>
