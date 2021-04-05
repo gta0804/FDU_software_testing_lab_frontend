@@ -1,0 +1,139 @@
+<template>
+    <div class="back">
+		<div class="formbox">
+			<div class="logobox">
+				<img src="../assets/logo1.png" alt="同济大学浙江学院">
+				<h3>银行业务模拟实训系统</h3>
+			</div>
+			<el-form :model="ruleForm" :rules="rules" label-position="left" ref="ruleForm" label-width="0px" v-loading="loading">
+				<!--用户名-->
+				<el-form-item prop="username">
+					<el-input type="text"
+                      v-model="ruleForm.username"
+                      auto-complete="off"
+                      placeholder="请输入账号"
+					  prefix-icon="el-icon-user"
+					  clearable
+					  >
+					</el-input>
+				</el-form-item>
+				<!--密码-->
+				<el-form-item prop="password">
+					<el-input type="password"
+                      v-model="ruleForm.password"
+                      auto-complete="off"
+                      placeholder="请输入密码"
+					  prefix-icon="el-icon-unlock"
+					  show-password
+					  clearable
+					  >
+
+					</el-input>
+				</el-form-item>
+				<!--登陆按钮-->
+				<el-form-item class="subbtn">
+					<el-button type="primary"
+						size="medium"
+                       @click="submitForm('ruleForm')">登录
+					</el-button>
+				</el-form-item>
+			</el-form>
+			<div class="footremark">
+				<p></p>
+			</div>
+		</div>
+		<div class="loginback">
+			
+		</div>
+	</div>
+</template>
+
+<script>
+	export default {
+		name: 'HomePage',
+		data() {
+			return {
+				ruleForm: {
+				  username: '',
+				  password: ''
+				},
+				rules: {
+				  username: [
+				    {required: true, message: "请输入账号", trigger: 'blur'}
+				  ],
+				  password: [
+				    {required: true, message: '请输入密码', trigger: 'blur'}
+				  ]
+				},
+				loading: false
+			}
+		}
+    }
+</script>
+
+<style scoped>
+
+.back{
+	width: 100%;
+	height: 100vh;
+	background-size: cover;
+	position: relative;
+}
+.formbox{
+	position: absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%,-50%);
+	z-index:1;
+	padding:25px;
+	background-color:hsla(0,0%,98%,.7);
+	border-radius:5px;
+}
+.logobox{
+	text-align: center;
+	margin-bottom: 15px;
+}
+.logobox img{
+	max-width: 240px;
+	min-width: 120px;
+}
+.img{
+	border: none;
+}
+.logobox h3{
+	font-size: 24px;
+	color: #2d8061;
+	font-weight: 400!important;
+	padding: 15px 0;
+	font-family: "\5FAE\8F6F\96C5\9ED1";
+	letter-spacing: 4px;
+	margin: 0;
+}
+.loginback{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 0;
+	background: url("../assets/background/back.jpg");
+}
+.subbtn{
+	padding: 0 0 25px;
+}
+.subbtn button{
+	width: 100%;
+	background-color: #eee;
+	color: #068e68;
+}
+.footremark{
+	width: 22vw;
+	text-overflow: ellipsis;
+	text-align: center;
+	margin: 0 auto;
+	color: #eee;
+}
+.el-button--primary {
+    color: #fff;
+    background-color: #068e68;
+    border-color: #068e68;
+}
+</style>
