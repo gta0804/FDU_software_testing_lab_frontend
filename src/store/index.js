@@ -12,7 +12,7 @@ export default new Vuex.Store({
     login(state, data) {
       localStorage.setItem('token', data.token);
       localStorage.setItem('username', data.username);
-      state.token = data.token
+      state.token = data.token;
       state.username = data.username;
     },
     logout(state) {
