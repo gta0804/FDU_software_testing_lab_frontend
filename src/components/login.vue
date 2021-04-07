@@ -67,6 +67,38 @@
 				},
 				loading: false
 			}
+		},
+		methods:{
+			submitForm(formName){
+				this.$refs[formName].validate((valid) => {
+				  if (valid) {
+				    //this.$axios.post用来向后台请求数据
+				    this.$axios.post('/login', {
+				      username: this.ruleForm.username,
+				      password: this.ruleForm.password
+				    })
+				      .then(resp => {
+				        if (resp.code === 200 && resp.data.hasOwnProperty("token")) {
+						let data = {
+							token: resp.data.token,
+							username: this.ruleForm.username
+						}
+				          this.$store.commit('login', data);
+				          this.$router.push("/welcome").catch(err => err);
+				        } else {
+				          console.log(resp.data);
+				        }
+				      })
+				      .catch(error => {
+				        this.$message({
+				          showClose: true,
+				          message: "登录失败",
+				          type:'error'
+				        });
+				      })
+				  }
+				});
+			}
 		}
     }
 </script>

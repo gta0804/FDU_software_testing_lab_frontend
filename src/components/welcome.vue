@@ -139,19 +139,18 @@
 	},
     methods: {
 		quit(){
-			this.$confirm('真的要注销账户吗？', '提示', {
-				confirmButtonText: '确定',
-				cancelButtonText: '取消',
-				type: 'warning',
-			}).then(() => {
-				this.$message({
-					showClose: true,
-					type: 'success',
-					message: '注销成功'
-			});
-			this.$store.commit('logout');
-			this.$router.push("/");
-			}).catch(() => {
+			this.$axios.post('/logout', {
+			  token: this.$store.state.token
+			})
+			.then(resp => {
+				if (resp.code === 200) {
+					this.$store.commit('logout');
+					this.$router.push("/");
+				} else {
+				console.log(resp.data);
+				}
+			})
+			.catch(() => {
 				this.$message({
 					showClose: true,
 					type: 'info',
