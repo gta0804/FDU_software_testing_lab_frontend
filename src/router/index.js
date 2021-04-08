@@ -3,6 +3,9 @@ import Router from 'vue-router'
 import store from '../store'
 import login from '@/components/login'
 import welcome from '@/components/welcome'
+import check from '@/components/check'
+import bill from '@/components/bill'
+
 
 
 Vue.use(Router);
@@ -33,7 +36,24 @@ export const router = new Router({
 		meta: {
 			//requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
 		},
-		children: []
+		children: [
+			{
+				path:'/check',
+				name:'check',
+				component: check,
+				meta: {
+					//requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+				}
+			},
+			{
+				path:'/bill',
+				name:'bill',
+				component: bill,
+				meta: {
+					//requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+				}
+			}
+		]
     },
     
   ]

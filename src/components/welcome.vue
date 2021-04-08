@@ -42,13 +42,14 @@
 				      class="el-menu-vertical-demo"
 					  id="el-menu-vertical-demo"
 					  style="float: left;"
+					  router
 					  >
 				      <el-submenu index="1">
 				        <template #title>
 				          <i class="el-icon-s-order"></i>
 				          <span>公共业务</span>
 				        </template>
-				          <el-menu-item index="1-1">选项1</el-menu-item>
+				          <el-menu-item index="/check">核实客户身份</el-menu-item>
 				          <el-menu-item index="1-2">选项2</el-menu-item>
 				          <el-menu-item index="1-3">选项3</el-menu-item>
 				      </el-submenu>
@@ -57,32 +58,42 @@
 				          <i class="el-icon-s-order"></i>
 				          <span>存款业务</span>
 				        </template>
-				          <el-menu-item index="1-1">选项1</el-menu-item>
-				          <el-menu-item index="1-2">选项2</el-menu-item>
-				          <el-menu-item index="1-3">选项3</el-menu-item>
+				          <el-menu-item index="2-1">购买产品</el-menu-item>
+				          <el-menu-item index="2-2">选项2</el-menu-item>
+				          <el-menu-item index="2-3">选项3</el-menu-item>
 				      </el-submenu>
 				      <el-submenu index="3">
 				        <template #title>
 				          <i class="el-icon-s-order"></i>
-				          <span>系统管理</span>
+				          <span>贷款业务</span>
 				        </template>
-				          <el-menu-item index="1-1">选项1</el-menu-item>
-				          <el-menu-item index="1-2">选项2</el-menu-item>
-				          <el-menu-item index="1-3">选项3</el-menu-item>
+				          <el-menu-item index="/bill">贷款账户管理</el-menu-item>
+				          <el-menu-item index="3-2">日中处理</el-menu-item>
+				          <el-menu-item index="3-3">选项3</el-menu-item>
 				      </el-submenu>
 				      <el-submenu index="4">
 				        <template #title>
 				          <i class="el-icon-s-order"></i>
-				          <span>其他</span>
+				          <span>结算业务</span>
 				        </template>
-				          <el-menu-item index="1-1">选项1</el-menu-item>
-				          <el-menu-item index="1-2">选项2</el-menu-item>
-				          <el-menu-item index="1-3">选项3</el-menu-item>
+				          <el-menu-item index="4-1">选项1</el-menu-item>
+				          <el-menu-item index="4-2">选项2</el-menu-item>
+				          <el-menu-item index="4-3">选项3</el-menu-item>
 				      </el-submenu>
+					  <el-submenu index="5">
+					    <template #title>
+					      <i class="el-icon-s-order"></i>
+					      <span>系统管理</span>
+					    </template>
+					      <el-menu-item index="5-1">交易流水</el-menu-item>
+					      <el-menu-item index="5-2">选项2</el-menu-item>
+					      <el-menu-item index="5-3">选项3</el-menu-item>
+					  </el-submenu>
 				    </el-menu>
 			</div>
 		</aside>
 		<div class="layright">
+			
 			<div class="headbox">
 				<el-page-header class="pageheader" title="" content="首页">
 				</el-page-header>
@@ -91,6 +102,7 @@
 				
 			</div>
 			<div class="padd">
+				<router-view>
 				<div id="welcome" class="welcome">
 					<div class="boxdiv">
 						<div class="wel-title leftclass">银行业务模拟实训系统</div>
@@ -110,6 +122,7 @@
 						</div>
 					</div>
 				</div>
+				</router-view>
 			</div>
 		</div>
 	</div>
@@ -120,7 +133,7 @@
 
 <script>
   export default {
-    name: 'UserPage',
+    name: 'welcome',
     data(){
       return{
       }
@@ -131,11 +144,12 @@
 		if(pageheader[0].title==""){
 			pageheader[0].children[0].style.display = "none";
 		}
-		
+		//渲染首页右下角的日期
 		var date = new Date();
-		console.log(date);
 		var dateshow = document.getElementsByClassName("date");
-		dateshow[0].children[0].innerHTML = date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate();
+		if(dateshow[0]){
+			dateshow[0].children[0].innerHTML = date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate();
+		}
 	},
     methods: {
 		quit(){
@@ -211,7 +225,7 @@
 	color: #068e68;
 }
 .iconfont{
-	font-size:20px;
+	font-size:16px;
 }
 .head_r>div{
 	float:right;
@@ -340,5 +354,34 @@
 	margin-top: 65px;
 	font-size: 18px;
 }
+
+/*  子组件style */
+	.searchtitle{
+		position: relative;
+		text-align: center;
+		line-height: 28px;
+		margin-bottom: 15px;
+	}
+	.searchtitle>div:first-child {
+		font-size: 14px;
+	    width: 90px;
+	    min-height: 20px;
+	}
+	.searchtitle>div:last-child {
+	    width: calc(100% - 110px);
+	}
+	.searchtitle>div{
+		float: left;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+	.el-button--primary {
+	    color: #fff;
+	    background-color: #068e68;
+	    border-color: #068e68;
+	}
+	.searchtitle button{
+		float:left;
+	}
 </style>
 
