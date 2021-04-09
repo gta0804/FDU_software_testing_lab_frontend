@@ -200,6 +200,14 @@
 				.catch(_ => {});
 			},
 			submitForm(formName){
+				if(!this.$store.state.accountId){
+					this.$message({
+					  showClose: true,
+					  message: "尚未选择客户",
+					  type:'warning'
+					});
+					return;
+				}
 				this.$refs[formName].validate((valid) => {
 				  if (valid) {
 					  let fine = this.row.fine;

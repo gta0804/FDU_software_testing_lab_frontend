@@ -14,7 +14,9 @@
 				</el-col>
 				<el-col :xs="12" :sm="12" :lg="6" class="searchtitle">
 					<div>产品类型</div>
-					<el-input v-model="productType" placeholder="输入类型" size="mini"></el-input>
+					<el-select v-model="productType" placeholder="输入类型" size="mini">
+						<el-option v-for="item in types" :key="item.value" :label="item.label" :value="item.value"></el-option>
+					</el-select>
 				</el-col>
 				<el-col :xs="12" :sm="12" :lg="6" class="searchtitle">
 					<el-button type="primary" size="mini" @click="search">查询</el-button>
@@ -37,7 +39,6 @@
 				<el-collapse-item  align="center" title="定期理财产品" name="3">
 					<el-col class="el-collapse-item" v-for="(item,index) in products" :key="index" :xs="12" :sm="12" :lg="6">
 						<div class="product" @click="info(item)"><i class="el-icon-shopping-bag-1"></i> {{item.name}}</div>
-						<!-- <el-button type="text"  title="还款" @click="showPay(item,index)"><i class="el-icon-wallet iconfont"></i></el-button> -->
 					</el-col>
 				</el-collapse-item>
 				</el-collapse>
@@ -126,6 +127,7 @@
 				rules: {
 				  
 				},
+				types:[{value:1,label:"定期理财产品"},{value:2,label:"基金"},{value:3,label:"股票"}],
 				shares:[{name:"股票1",type:3,amount:1},{name:"股票2",type:3,amount:5},{name:"股票3",type:3,amount:10}], //股票
 				funds:[{name:"基金1",type:2,rate:1,amount:1000},{name:"基金2",type:2,rate:2,amount:5000},{name:"基金3",type:2,rate:3,amount:10000}], //基金
 				products:[{name:"定期1",type:1,rate:1,duration:1,amount:100},{name:"定期2",type:1,rate:2,duration:2,amount:500},{name:"定期3",type:1,rate:3,duration:3,amount:1000}], //定期理财产品
@@ -146,6 +148,16 @@
 			let table2 = document.getElementById("table2");
 			table1.style.display = "none";
 			table2.style.display = "none";
+			let grade = this.$store.state.grade;
+			let collapse = document.getElementsByClassName("myCollapse")[0];
+			let stare = collapse.children[0];
+			let fund = collapse.children[1];
+			if(grade >= 2){
+				stare.style.display = "none";
+			}
+			if(grade >= 3){
+				fund.style.display = "none";
+			}
 		},
 		methods:{
 			search(){
@@ -237,9 +249,17 @@
 				}
 			},
 			buy(row){
+				if(!this.$store.state.accountId){
+					this.$message({
+					  showClose: true,
+					  message: "尚未选择客户",
+					  type:'warning'
+					});
+					return;
+				}
 				let amount = 0;
 				if(row.type == 3){ //股票
-					if(count<=0) return;
+					if(count<=0 || !count) return;
 					amount = row.amount * this.ruleForm.count;
 				}
 				this.$axios.post('/wmp/buy', {
@@ -258,6 +278,7 @@
 							  message: "买入成功",
 							  type:'success'
 							});
+							location.reload();
 						}
 						else if(resp.data.success == 1){
 							this.$message({
@@ -273,7 +294,9 @@
 							  type:'success'
 							});
 						}
-						
+						this.count = 1;
+						this.start = null;
+						this.end = null;
 				    } else {
 				      console.log(resp.data);
 				    }

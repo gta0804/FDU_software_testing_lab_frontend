@@ -39,6 +39,10 @@
 				label="账户类型">
 				</el-table-column>
 				<el-table-column
+				prop="grade"
+				label="信用等级">
+				</el-table-column>
+				<el-table-column
 				label="操作">
 					<template slot-scope="scope">
 						<el-button type="text"  title="选择" @click="select(scope.row)"><i class="el-icon-success iconfont"></i></el-button>
@@ -62,6 +66,7 @@
 						balance:123,
 						customerName:'wang',
 						type:'高',
+						grade:3,
 					}
 				],
 				accountId: '',

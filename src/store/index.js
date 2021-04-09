@@ -8,7 +8,8 @@ export default new Vuex.Store({
     token: localStorage.getItem('token') || null,
     username: localStorage.getItem('username') || null,
 	accountId: localStorage.getItem('accountId') || null,
-	customerName: localStorage.getItem('customerName') || null
+	customerName: localStorage.getItem('customerName') || null,
+	grade: localStorage.getItem('grade') || null
   },
   mutations: {
     login(state, data) {
@@ -32,14 +33,18 @@ export default new Vuex.Store({
 	setCustomer(state, data){
 		localStorage.setItem('accountId',data.accountId);
 		localStorage.setItem('customerName',data.customerName);
+		localStorage.setItem('grade',data.grade);
 		state.accountId = data.accountId;
 		state.customerName = data.customerName;
+		state.grade = data.grade;
 	},
 	removeCustomer(state){
 		localStorage.removeItem('accountId');
 		localStorage.removeItem('customerName');
+		localStorage.removeItem('grade');
 		state.accountId = null;
 		state.customerName = null;
+		state.grade = null;
 	}
   },
   getters: {},
