@@ -3,9 +3,12 @@ import Router from 'vue-router'
 import store from '../store'
 import login from '@/components/login'
 import welcome from '@/components/welcome'
+import welcomeTemplate from '@/components/welcomeTemplate'
 import check from '@/components/check'
 import bill from '@/components/bill'
-
+import auto from '@/components/auto'
+import runningtab from '@/components/runningtab'
+import buyproducts from '@/components/buyproducts'
 
 
 Vue.use(Router);
@@ -38,6 +41,14 @@ export const router = new Router({
 		},
 		children: [
 			{
+				path:'/',
+				name:'welcomeTemplate',
+				component: welcomeTemplate,
+				meta: {
+					//requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+				}
+			},
+			{
 				path:'/check',
 				name:'check',
 				component: check,
@@ -49,6 +60,30 @@ export const router = new Router({
 				path:'/bill',
 				name:'bill',
 				component: bill,
+				meta: {
+					//requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+				}
+			},
+			{
+				path:'/auto',
+				name:'auto',
+				component: auto,
+				meta: {
+					//requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+				}
+			},
+			{
+				path:'/runningtab',
+				name:'runningtab',
+				component: runningtab,
+				meta: {
+					//requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+				}
+			},
+			{
+				path:'/buyproducts',
+				name:'buyproducts',
+				component: buyproducts,
 				meta: {
 					//requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
 				}

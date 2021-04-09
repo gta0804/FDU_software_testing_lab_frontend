@@ -4,17 +4,22 @@
 		<div id="headers">
 			<div class="lefthead" style="float: left;">
 				<div class="animate">
-					<img src="../assets/Smart系列logo-11.png" alt="Smart-T">
+					<img src="../assets/Smart系列logo-11.png" alt="Smart-T" @click="$router.push('/welcome')">
 				</div>
 				<div>
 					<i class="el-icon-s-operation iconfont"></i>
 				</div>
 			</div>
+			<div class="customerinfo">
+				<div>当前客户号：{{accountId}}</div>
+				<div>客户姓名：{{customerName}}</div>
+				<div><el-button type="text" @click="cancel" size="mini" v-show="$store.state.accountId != null">取消选择</el-button></div>
+			</div>
 			<div class="head_r" style="overflow: hidden;">
 				<div class="opacity-animate">
 					<el-dropdown @command="handleCommand">
 						<span class="el-dropdown-link">
-							<i class="el-icon-user-solid"></i>十九组管理员
+							<i class="el-icon-user-solid"></i>{{$store.state.username}}
 						</span>
 						<template #dropdown>
 						    <el-dropdown-menu>
@@ -50,17 +55,14 @@
 				          <span>公共业务</span>
 				        </template>
 				          <el-menu-item index="/check">核实客户身份</el-menu-item>
-				          <el-menu-item index="1-2">选项2</el-menu-item>
-				          <el-menu-item index="1-3">选项3</el-menu-item>
+						  <el-menu-item index="/runningtab">交易流水</el-menu-item>
 				      </el-submenu>
 				      <el-submenu index="2">
 				        <template #title>
 				          <i class="el-icon-s-order"></i>
 				          <span>存款业务</span>
 				        </template>
-				          <el-menu-item index="2-1">购买产品</el-menu-item>
-				          <el-menu-item index="2-2">选项2</el-menu-item>
-				          <el-menu-item index="2-3">选项3</el-menu-item>
+				          <el-menu-item index="/buyproducts">购买产品</el-menu-item>
 				      </el-submenu>
 				      <el-submenu index="3">
 				        <template #title>
@@ -68,62 +70,15 @@
 				          <span>贷款业务</span>
 				        </template>
 				          <el-menu-item index="/bill">贷款账户管理</el-menu-item>
-				          <el-menu-item index="3-2">日中处理</el-menu-item>
-				          <el-menu-item index="3-3">选项3</el-menu-item>
+				          <el-menu-item index="/auto">日终处理</el-menu-item>
 				      </el-submenu>
-				      <el-submenu index="4">
-				        <template #title>
-				          <i class="el-icon-s-order"></i>
-				          <span>结算业务</span>
-				        </template>
-				          <el-menu-item index="4-1">选项1</el-menu-item>
-				          <el-menu-item index="4-2">选项2</el-menu-item>
-				          <el-menu-item index="4-3">选项3</el-menu-item>
-				      </el-submenu>
-					  <el-submenu index="5">
-					    <template #title>
-					      <i class="el-icon-s-order"></i>
-					      <span>系统管理</span>
-					    </template>
-					      <el-menu-item index="5-1">交易流水</el-menu-item>
-					      <el-menu-item index="5-2">选项2</el-menu-item>
-					      <el-menu-item index="5-3">选项3</el-menu-item>
-					  </el-submenu>
 				    </el-menu>
 			</div>
 		</aside>
 		<div class="layright">
-			
-			<div class="headbox">
-				<el-page-header class="pageheader" title="" content="首页">
-				</el-page-header>
-			</div>
-			<div>
-				
-			</div>
-			<div class="padd">
 				<router-view>
-				<div id="welcome" class="welcome">
-					<div class="boxdiv">
-						<div class="wel-title leftclass">银行业务模拟实训系统</div>
-						<div class="fullName leftclass">欢迎十九组管理员</div>
-						<div class="role leftclass">
-							角色
-							<el-divider direction="vertical" class="verticalline"></el-divider>
-							银行管理员
-						</div>
-						<div class="role leftclass info">
-							未读消息
-							<el-divider direction="vertical" class="verticalline"></el-divider>
-							0
-						</div>
-						<div class="date leftclass">
-							<p></p>
-						</div>
-					</div>
-				</div>
+				
 				</router-view>
-			</div>
 		</div>
 	</div>
 	
@@ -135,24 +90,27 @@
   export default {
     name: 'welcome',
     data(){
-      return{
-      }
+		return{
+			accountId:'',
+			customerName:''
+		}
     },
 	mounted(){
-		var pageheader = document.getElementsByClassName("pageheader");
-		//如果Pageheader为首页，隐藏左半部分的title内容
-		if(pageheader[0].title==""){
-			pageheader[0].children[0].style.display = "none";
-		}
 		//渲染首页右下角的日期
 		var date = new Date();
 		var dateshow = document.getElementsByClassName("date");
 		if(dateshow[0]){
 			dateshow[0].children[0].innerHTML = date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate();
 		}
+		let accountId = this.$store.state.accountId;
+		let customerName = this.$store.state.customerName;
+		this.accountId =  accountId ? accountId : "暂无";
+		this.customerName = customerName ? customerName : "暂无";
 	},
     methods: {
 		quit(){
+			this.$store.commit('logout');
+			this.$router.push("/");
 			this.$axios.post('/logout', {
 			  token: this.$store.state.token
 			})
@@ -164,20 +122,24 @@
 				console.log(resp.data);
 				}
 			})
-			.catch(() => {
-				this.$message({
-					showClose: true,
-					type: 'info',
-					message: '已取消注销'
-		    });
+			.catch(error => {
+				console.log(error);
 		  });
 		},
 		handleCommand(command){
-			console.log(command=="quit");
 			if(command=="quit"){
 				this.quit();
 			}
 		},
+		cancel(){
+			this.$store.commit('removeCustomer');
+			location.reload();
+			this.$message({
+			  showClose: true,
+			  message: "取消成功",
+			  type:'success'
+			});
+		}
 
     },
   }
@@ -226,6 +188,13 @@
 }
 .iconfont{
 	font-size:16px;
+}
+.customerinfo{
+	float: left;
+	margin-left: 33%;
+}
+.customerinfo>div{
+	float: left;
 }
 .head_r>div{
 	float:right;
@@ -289,6 +258,9 @@
 	background-color: hsla(0,0%,98%,.1);
 	padding: 10px 10px 10px 15px;
 }
+.headbox .el-page-header__left{
+	color: #fff;
+} 
 .headbox .el-page-header__content{
 	color: #fff;
 }
