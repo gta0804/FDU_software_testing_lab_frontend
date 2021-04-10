@@ -9,6 +9,7 @@ import bill from '@/components/bill'
 import auto from '@/components/auto'
 import runningtab from '@/components/runningtab'
 import buyproducts from '@/components/buyproducts'
+import viewproducts from '@/components/viewproducts'
 
 
 Vue.use(Router);
@@ -37,7 +38,7 @@ export const router = new Router({
 		name: 'welcome',
 		component: welcome,
 		meta: {
-			//requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+			requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
 		},
 		children: [
 			{
@@ -45,7 +46,7 @@ export const router = new Router({
 				name:'welcomeTemplate',
 				component: welcomeTemplate,
 				meta: {
-					//requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+					requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
 				}
 			},
 			{
@@ -53,7 +54,7 @@ export const router = new Router({
 				name:'check',
 				component: check,
 				meta: {
-					//requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+					requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
 				}
 			},
 			{
@@ -61,7 +62,7 @@ export const router = new Router({
 				name:'bill',
 				component: bill,
 				meta: {
-					//requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+					requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
 				}
 			},
 			{
@@ -69,7 +70,7 @@ export const router = new Router({
 				name:'auto',
 				component: auto,
 				meta: {
-					//requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+					requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
 				}
 			},
 			{
@@ -77,7 +78,7 @@ export const router = new Router({
 				name:'runningtab',
 				component: runningtab,
 				meta: {
-					//requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+					requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
 				}
 			},
 			{
@@ -85,7 +86,15 @@ export const router = new Router({
 				name:'buyproducts',
 				component: buyproducts,
 				meta: {
-					//requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+					requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+				}
+			},
+			{
+				path:'/viewproducts',
+				name:'viewproducts',
+				component: viewproducts,
+				meta: {
+					requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
 				}
 			}
 		]
@@ -101,25 +110,16 @@ router.beforeEach(function (to, from, next) {
       next();
     } else {
       next({
-        path: '/login',
-        query: {redirect: to.fullPath} // 登录成功之后重新跳转到该路由
+        path: '/',
+        query: {redirect:to.fullPath} // 登录成功之后重新跳转到该路由
       });
     }
   } else {
     next()
   }
-  if (from.fullPath === "/" && to.fullPath === "/login") {
-    if (localStorage.getItem('token')) {
-      store.commit('logout');
-    }
-  }
   if (to.fullPath === "/" || to.fullPath === "/login") {
     if (localStorage.getItem('token')) {
-      next({
-        path: from.fullPath
-      });
-    } else {
-      next();
+      store.commit('logout');
     }
   }
 });

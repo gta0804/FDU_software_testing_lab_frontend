@@ -8,11 +8,11 @@
 			<div id="welcome" class="welcome">
 				<div class="boxdiv">
 					<div class="wel-title leftclass">银行业务模拟实训系统</div>
-					<div class="fullName leftclass">欢迎十九组管理员</div>
+					<div class="fullName leftclass">欢迎{{$store.state.username}}柜员</div>
 					<div class="role leftclass">
 					角色
 					<el-divider direction="vertical" class="verticalline"></el-divider>
-					银行管理员
+					柜员
 					</div>
 					<div class="role leftclass info">
 					未读消息

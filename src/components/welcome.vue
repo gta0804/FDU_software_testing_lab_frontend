@@ -63,6 +63,7 @@
 				          <span>存款业务</span>
 				        </template>
 				          <el-menu-item index="/buyproducts">购买产品</el-menu-item>
+						  <el-menu-item index="/viewproducts">查看产品</el-menu-item>
 				      </el-submenu>
 				      <el-submenu index="3">
 				        <template #title>
@@ -247,6 +248,12 @@
 #el-menu-vertical-demo.el-menu .el-submenu .el-menu{
     background-color: transparent;
     border: none;
+}
+#el-menu-vertical-demo.el-menu .el-submenu .el-submenu__title:hover{
+	background-color: hsla(0,0%,100%,.4);
+}
+#el-menu-vertical-demo.el-menu .el-submenu .el-menu .el-menu-item:hover{
+	background-color: hsla(0,0%,100%,.4);
 }
 #el-menu-vertical-demo.el-menu .el-submenu .el-menu li{
 	padding-left:10px;

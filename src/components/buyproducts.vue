@@ -75,7 +75,7 @@
 			label="操作">
 				<template slot-scope="scope">
 					<el-date-picker v-model="ruleForm.start" type="date" size="mini" placeholder="起始时间"></el-date-picker>
-					<el-date-picker v-model="ruleForm.end" type="date" size="mini" placeholder="结束时间"></el-date-picker>
+					<el-date-picker v-model="ruleForm.end" type="date" size="mini" placeholder="结束时间" :disabled="scope.row.type==1"></el-date-picker>
 					<el-button type="text"  title="买入" @click="buy(scope.row)"><i class="el-icon-plus iconfont"></i></el-button>
 				</template>
 			</el-table-column>
@@ -247,6 +247,9 @@
 					table1.style.display = "block";
 					table2.style.display = "none";
 				}
+				this.ruleForm.count = 1;
+				this.ruleForm.start = null;
+				this.ruleForm.end = null;
 			},
 			buy(row){
 				if(!this.$store.state.accountId){
@@ -262,12 +265,21 @@
 					if(count<=0 || !count) return;
 					amount = row.amount * this.ruleForm.count;
 				}
+				else if(row.type == 2){ //基金
+					if(this.ruleForm.start>=this.ruleForm.end){
+						return;
+					}
+				}
+				else{ //定期
+					this.ruleForm.end = new Date(this.dateFormat(this.ruleForm.start,row.duration));
+				}
 				this.$axios.post('/wmp/buy', {
+					title:row.name,
 					accountId:this.$store.state.accountId,
 					type: row.type,
 					amount: amount,
-					startDate: this.dateFormat(this.ruleForm.start),
-					endDate: this.dateFormat(this.ruleForm.end),
+					startDate: this.dateFormat(this.ruleForm.start,0),
+					endDate: this.dateFormat(this.ruleForm.end,0),
 					number: row.type == 3 ? this.ruleForm.count : 1
 				})
 				  .then(resp => {
@@ -302,16 +314,17 @@
 				    }
 				  })
 				  .catch(error => {
-				    console.log(resp.data);
+				    console.log(error);
 				  })
 			},
 			back(){
 				history.go(-1);
 			},
-			dateFormat(date){
+			dateFormat(date,num){
+				//num方便定期理财产品在年上加固定值
 				if(date){
 					let res = "";
-					res += date.getFullYear()+"-";
+					res += (date.getFullYear()+num)+"-";
 					let month = date.getMonth()+1;
 					if(month<10){
 						month = "0"+month;
@@ -325,6 +338,17 @@
 					return res;
 				}
 				return null;
+			},
+			dateCompare(date1,date2){
+				if(date1.getFullYear()!=date2.getFullYear()){
+					return date1.getFullYear() - date2.getFullYear();
+				}
+				else if(date1.getMonth()!=date2.getMonth()){
+					return date1.getMonth() - date2.getMonth();
+				}
+				else{
+					return date1.getDate() - date2.getDate();
+				}
 			},
 		}
 	}

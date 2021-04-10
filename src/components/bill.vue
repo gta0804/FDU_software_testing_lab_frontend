@@ -238,37 +238,45 @@
 							  fine: fine
 						  })
 						  .then(resp => {
-							  if(resp.code === 200 && resp.data.success){
-								  console.log("支付罚款成功");
-								  //还款
-								  this.$axios.post('/account/loan/payment/repayment', {
-									accountId: this.$store.state.accountId,
-								  	loanId: this.row.loanid,
-									index: this.index,
-									amount:rest
-								  })
-								  .then(resp => {
-								      if (resp.code === 200 && resp.data.success) {
-								        this.$message({
-								          showClose: true,
-								          message: "还款成功",
-								          type:'success'
-								        });
-										location.reload();
-								      } else {
-								        this.$message({
-								          showClose: true,
-								          message: "账户余额不足",
-								          type:'error'
-								        });
-								      }
-								  })
-								  .catch(error => {
-								      console.log(error);
-								  })
-							  }
+							  if(resp.code === 200 ){
+								  if(resp.data.success){
+									 console.log("支付罚款成功");
+									 //还款
+									 this.$axios.post('/account/loan/payment/repayment', {
+									 									accountId: this.$store.state.accountId,
+									 	loanId: this.row.loanid,
+									 									index: this.index,
+									 									amount:rest
+									 })
+									 .then(resp => {
+									     if (resp.code === 200 && resp.data.success) {
+									       this.$message({
+									         showClose: true,
+									         message: "还款成功",
+									         type:'success'
+									       });
+									 										location.reload();
+									     } else {
+									       this.$message({
+									         showClose: true,
+									         message: resp.data.message,
+									         type:'error'
+									       });
+									     }
+									 })
+									 .catch(error => {
+									     console.log(error);
+									 }) 
+								  }
+								  else{
+									  this.$message({
+									    showClose: true,
+									    message: "账户余额不足",
+									    type:'error'
+									  });
+								  }
+							  }							  
 						  });
-						  
 					  }
 				  }
 				});
