@@ -199,7 +199,7 @@
 					accountId:this.$store.state.accountId
 				})
 				  .then(resp => {
-				    if (resp.code === 200) {
+				    if (resp.status === 200) {
 						this.shares = resp.data.shares;
 						this.funds = resp.data.funds;
 						this.products = resp.data.products;
@@ -225,7 +225,7 @@
 					wmpId: id
 				})
 				  .then(resp => {
-				    if (resp.code === 200) {
+				    if (resp.status === 200) {
 						this.benefits = resp.data.benefits;
 				    } else {
 				      console.log(resp.data);

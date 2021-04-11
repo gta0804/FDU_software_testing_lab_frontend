@@ -122,10 +122,10 @@
 					start:null,
 					end:null,
 					amount:0,
-					
+
 				},
 				rules: {
-				  
+
 				},
 				types:[{value:1,label:"定期理财产品"},{value:2,label:"基金"},{value:3,label:"股票"}],
 				shares:[{name:"股票1",type:3,amount:1},{name:"股票2",type:3,amount:5},{name:"股票3",type:3,amount:10}], //股票
@@ -283,7 +283,7 @@
 					number: row.type == 3 ? this.ruleForm.count : 1
 				})
 				  .then(resp => {
-				    if (resp.code === 200) {
+				    if (resp.status === 200) {
 						if(resp.data.success == 0){
 							this.$message({
 							  showClose: true,

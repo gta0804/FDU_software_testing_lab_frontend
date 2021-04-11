@@ -76,11 +76,11 @@
 		methods:{
 			check(){
 				if(!this.input) return;
-				this.$axios.get('/account/check', {
+				this.$axios.post('/account/check', {
 						idNumber: this.input
 				})
 				.then(resp => {
-					if (resp.code === 200) {
+					if (resp.status === 200) {
 						if(resp.data.success){
 							this.account = resp.data.accounts;
 						}

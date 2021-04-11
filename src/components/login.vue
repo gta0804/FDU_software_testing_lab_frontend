@@ -43,7 +43,7 @@
 			</div>
 		</div>
 		<div class="loginback">
-			
+
 		</div>
 	</div>
 </template>
@@ -78,7 +78,7 @@
 				      password: this.ruleForm.password
 				    })
 				      .then(resp => {
-				        if (resp.code === 200 && resp.data.hasOwnProperty("token")) {
+				        if (resp.data.code === 200 && resp.data.hasOwnProperty("token")) {
 						let data = {
 							token: resp.data.token,
 							username: this.ruleForm.username
@@ -191,31 +191,31 @@
                     animation-timing-function: ease-in;
                      opacity: 0;
                  }
-             
+
             40% {
                      -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
                      transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
                      -webkit-animation-timing-function: ease-in;
                      animation-timing-function: ease-in;
                  }
-            
+
             60% {
                      -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
                      transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
                      opacity: 1;
                 }
-             
+
             80% {
                      -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
                      transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
                 }
-            
+
             to {
                     -webkit-transform: perspective(400px);
                     transform: perspective(400px);
              }
 }
-       
+
 @keyframes flipInX {
             from {
                     -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
@@ -224,25 +224,25 @@
                     animation-timing-function: ease-in;
                      opacity: 0;
                  }
-             
+
             40% {
                      -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
                      transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
                      -webkit-animation-timing-function: ease-in;
                      animation-timing-function: ease-in;
                  }
-            
+
             60% {
                      -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
                      transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
                      opacity: 1;
                 }
-             
+
             80% {
                      -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
                      transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
                 }
-            
+
             to {
                     -webkit-transform: perspective(400px);
                     transform: perspective(400px);
