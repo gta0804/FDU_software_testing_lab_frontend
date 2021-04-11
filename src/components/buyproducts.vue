@@ -74,8 +74,9 @@
 			<el-table-column
 			label="操作">
 				<template slot-scope="scope">
-					<el-date-picker v-model="ruleForm.start" type="date" size="mini" placeholder="起始时间"></el-date-picker>
-					<el-date-picker v-model="ruleForm.end" type="date" size="mini" placeholder="结束时间" :disabled="scope.row.type==1"></el-date-picker>
+					<el-row><span>买入金额：</span><el-input v-model="ruleForm.amount" size="mini" placeholder="买入金额"></el-input></el-row>
+					<el-row><span>起始时间：</span><el-date-picker v-model="ruleForm.start" type="date" size="mini" placeholder="起始时间" style="width:150px"></el-date-picker></el-row>
+					<el-row><span>结束时间：</span><el-date-picker v-model="ruleForm.end" type="date" size="mini" placeholder="结束时间" :disabled="scope.row.type==1" style="width:150px"></el-date-picker></el-row>
 					<el-button type="text"  title="买入" @click="buy(scope.row)"><i class="el-icon-plus iconfont"></i></el-button>
 				</template>
 			</el-table-column>
@@ -102,7 +103,7 @@
 			<el-table-column
 			label="操作">
 				<template slot-scope="scope">
-					<el-input v-model="ruleForm.count" size="mini"></el-input>
+					<span>买入股数</span><el-input v-model="ruleForm.count" size="mini" placeholder="买入股数"></el-input>
 					<el-button type="text"  title="买入" @click="buy(scope.row)"><i class="el-icon-plus iconfont"></i></el-button>
 				</template>
 			</el-table-column>
@@ -122,10 +123,14 @@
 					start:null,
 					end:null,
 					amount:0,
-
 				},
 				rules: {
-
+					amount: [
+						{required: true, message: "请输入买入金额", trigger: 'blur'}
+					],
+					count: [
+						{required: true, message: "请输入买入金额", trigger: 'blur'}
+					]
 				},
 				types:[{value:1,label:"定期理财产品"},{value:2,label:"基金"},{value:3,label:"股票"}],
 				shares:[{name:"股票1",type:3,amount:1},{name:"股票2",type:3,amount:5},{name:"股票3",type:3,amount:10}], //股票
@@ -250,6 +255,7 @@
 				this.ruleForm.count = 1;
 				this.ruleForm.start = null;
 				this.ruleForm.end = null;
+				this.ruleForm.amount = 0;
 			},
 			buy(row){
 				if(!this.$store.state.accountId){
@@ -262,16 +268,39 @@
 				}
 				let amount = 0;
 				if(row.type == 3){ //股票
-					if(count<=0 || !count) return;
+					if(this.ruleForm.count<=0 || !this.ruleForm.count) return;
 					amount = row.amount * this.ruleForm.count;
 				}
 				else if(row.type == 2){ //基金
 					if(this.ruleForm.start>=this.ruleForm.end){
+						this.$message({
+						  showClose: true,
+						  message: "无效的日期",
+						  type:'warning'
+						});
 						return;
 					}
+					if(this.ruleForm.amount < row.amount){
+						this.$message({
+						  showClose: true,
+						  message: "买入金额应不小于起存金额",
+						  type:'warning'
+						});
+						return;
+					}
+					amount = this.ruleForm.amount;
 				}
 				else{ //定期
+					if(this.ruleForm.amount < row.amount){
+						this.$message({
+						  showClose: true,
+						  message: "买入金额应不小于起存金额",
+						  type:'warning'
+						});
+						return;
+					}
 					this.ruleForm.end = new Date(this.dateFormat(this.ruleForm.start,row.duration));
+					amount = this.ruleForm.amount;
 				}
 				this.$axios.post('/wmp/buy', {
 					title:row.name,
@@ -306,9 +335,10 @@
 							  type:'success'
 							});
 						}
-						this.count = 1;
-						this.start = null;
-						this.end = null;
+						this.ruleForm.count = 1;
+						this.ruleForm.start = null;
+						this.ruleForm.end = null;
+						this.ruleForm.amount = 0;
 				    } else {
 				      console.log(resp.data);
 				    }
