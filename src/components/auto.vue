@@ -26,7 +26,7 @@
 			auto(){
 				this.$axios.post('/account/loan/payLoanAutomatically')
 				.then(resp => {
-					if (resp.code === 200 && resp.data.success) {
+					if (resp.status === 200 && resp.data.success) {
 						this.flows = resp.data.flows;
 						console.log(this.flows);
 						this.$message({

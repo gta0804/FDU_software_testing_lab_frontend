@@ -144,7 +144,7 @@
 					accountId: this.input
 				})
 				.then(resp => {
-					if (resp.code === 200) {
+					if (resp.status === 200) {
 						if(resp.data.success){
 							this.loans = resp.data.loans;
 						}
@@ -238,24 +238,24 @@
 							  fine: fine
 						  })
 						  .then(resp => {
-							  if(resp.code === 200 ){
+							  if(resp.status === 200 ){
 								  if(resp.data.success){
 									 console.log("支付罚款成功");
 									 //还款
 									 this.$axios.post('/account/loan/payment/repayment', {
-									 									accountId: this.$store.state.accountId,
+									 	accountId: this.$store.state.accountId,
 									 	loanId: this.row.loanid,
-									 									index: this.index,
-									 									amount:rest
+									 	index: this.index,
+									 	amount:rest
 									 })
 									 .then(resp => {
-									     if (resp.code === 200 && resp.data.success) {
+									     if (resp.status === 200 && resp.data.success) {
 									       this.$message({
 									         showClose: true,
 									         message: "还款成功",
 									         type:'success'
 									       });
-									 										location.reload();
+											location.reload();
 									     } else {
 									       this.$message({
 									         showClose: true,

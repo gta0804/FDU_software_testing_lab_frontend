@@ -110,13 +110,13 @@
 	},
     methods: {
 		quit(){
-			this.$store.commit('logout');
-			this.$router.push("/");
+			// this.$store.commit('logout');
+			// this.$router.push("/");
 			this.$axios.post('/logout', {
 			  token: this.$store.state.token
 			})
 			.then(resp => {
-				if (resp.code === 200) {
+				if (resp.data.code === 200) {
 					this.$store.commit('logout');
 					this.$router.push("/");
 				} else {
