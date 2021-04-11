@@ -76,13 +76,9 @@
 				input3:'',
 				input4:'',
 				types:[{value:"贷款发放",label:"贷款发放"},{value:"贷款还款",label:"贷款还款"},{value:"理财产品流水",label:"理财产品流水"},{value:"罚金缴纳",label:"罚金缴纳"}],
-				payment:[{type:"贷款发放",amount:100,accountId:"RUC110",date:"2021-04-09"},
-				{type:"贷款还款",amount:105,accountId:"RUC110",date:"2021-04-10"},
-				{type:"理财产品流水",amount:77,accountId:"RUC110",date:"2021-04-05"}],
+				payment:[],
 				filtedpayment:[],
-				temppayment:[{type:"贷款发放",amount:100,accountId:"RUC110",date:"2021-04-09"},
-				{type:"贷款还款",amount:105,accountId:"RUC110",date:"2021-04-10"},
-				{type:"理财产品流水",amount:77,accountId:"RUC110",date:"2021-04-05"}]
+				temppayment:[]
 			}
 		},
 		methods:{			

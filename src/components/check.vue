@@ -18,7 +18,7 @@
 			<el-table
 			:data="account"
 			border
-			style="width: 50%">
+			style="width: 70%">
 				<el-table-column
 				prop="accountId"
 				label="账号编号"
@@ -60,15 +60,7 @@
 		data(){
 			return{
 				input:'',
-				account:[
-					{
-						accountId:123,
-						balance:123,
-						customerName:'wang',
-						type:'高',
-						grade:3,
-					}
-				],
+				account:[],
 				accountId: '',
 				customerName:''
 			}
