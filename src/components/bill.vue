@@ -93,12 +93,12 @@
 				<el-form-item prop="amount">
 					<el-input v-model="ruleForm.amount" placeholder="输入还款金额" size="mini"></el-input>
 				</el-form-item>
-				
+
 				<el-form-item class="subbtn">
 					<el-button size="mini" @click="cancel">取消</el-button>
 					<el-button type="primary" size="mini" @click="submitForm('ruleForm')">确定</el-button>
 				</el-form-item>
-				
+
 				</el-form>
 			</el-dialog>
 			</div>
@@ -140,7 +140,7 @@
 		methods:{
 			check(){
 				if(!this.input) return;
-				this.$axios.get('/account/loan/details', {
+				this.$axios.post('/account/loan/details', {
 					accountId: this.input
 				})
 				.then(resp => {
@@ -178,7 +178,7 @@
 				this.installments = [];
 				document.getElementsByClassName("searchtable")[0].style.display = "block";
 				document.getElementsByClassName("parp")[0].style.display = "none";
-				
+
 			},
 			back(){
 				history.go(-1);
@@ -266,7 +266,7 @@
 									 })
 									 .catch(error => {
 									     console.log(error);
-									 }) 
+									 })
 								  }
 								  else{
 									  this.$message({
@@ -275,7 +275,7 @@
 									    type:'error'
 									  });
 								  }
-							  }							  
+							  }
 						  });
 					  }
 				  }
