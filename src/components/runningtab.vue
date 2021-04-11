@@ -149,7 +149,7 @@
 				order: null,
 			})
 			.then(resp => {
-				if (resp.code === 200) {
+				if (resp.status === 200) {
 					this.payment = resp.data.flows;
 					this.temppayment = resp.data.flows;
 				} else {
