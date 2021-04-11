@@ -35,7 +35,7 @@
 				<el-button type="primary" size="mini" @click="reset">重置</el-button>
 			</el-col>
 			</el-row>
-			
+
 			<el-table
 			:data="payment"
 			border
@@ -81,7 +81,7 @@
 				temppayment:[]
 			}
 		},
-		methods:{			
+		methods:{
 			search(){
 				let input1 = this.input1;
 				let input2 = this.input2;
@@ -132,14 +132,14 @@
 				this.input2 = '';
 				this.input3 = '';
 				this.input4 = '';
-				
+
 			},
 			back(){
 				history.go(-1);
 			}
 		},
 		mounted(){
-			this.$axios.get('account/flow',{
+			this.$axios.post('/account/flow',{
 				accountId: this.$store.state.accountId ? this.$store.state.accountId : null,
 				option: null,
 				order: null,
