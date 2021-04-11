@@ -234,7 +234,7 @@
 						  //支付罚款
 						  this.$axios.post('/account/loan/payment/fine',{
 							  accountId: this.$store.state.accountId,
-							  loanId: this.row.loanid,
+							  loanId: this.row.loanId,
 							  fine: fine
 						  })
 						  .then(resp => {
@@ -244,7 +244,7 @@
 									 //还款
 									 this.$axios.post('/account/loan/payment/repayment', {
 									 	accountId: this.$store.state.accountId,
-									 	loanId: this.row.loanid,
+									 	loanId: this.row.loanId,
 									 	index: this.index,
 									 	amount:rest
 									 })
